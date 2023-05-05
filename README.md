@@ -56,7 +56,8 @@ docker run -it -u ubuntu wiseupdata/python bash
 - Python 3.11 
 - Ubuntu 23.04 Luna - Official
 - User`ubuntu` with sudo, no password
-- Made with A.I. contribution 🤖 
+- Made with A.I. contribution 🤖
+- New cleaned empty python independent of the system python 
 - [Dockerfile](https://github.com/wiseupdata/python/blob/main/versions/3.11/Dockerfile)
 
   > This setup it's the same for the tags: 3.11 and 3.11-ubuntu-23.04
@@ -81,19 +82,20 @@ docker run -it -u ubuntu wiseupdata/python:3.11-ubuntu-23.04 bash
 ## Version 3.10 ✨️
 
 - Python 3.10
-- Ubuntu 23.04 Luna - Official
+- Ubuntu 22.04.2 LTS end of life April 2032 - Official
 - User`ubuntu` with sudo, no password
-- Made with A.I. contribution 🤖 
+- Made with A.I. contribution 🤖
+- New cleaned empty python independent of the system python  
 - [Dockerfile](https://github.com/wiseupdata/python/blob/main/versions/3.10/Dockerfile)
 
-  > This setup it's the same for the tags: 3.10 and 3.10-ubuntu-23.04
+  > This setup it's the same for the tags: 3.10 and 3.10-ubuntu-22.04
 
 <br>
 
 Example with specific version 💻:
 ```shell
-docker run -it -u ubuntu wiseupdata/python:3.10 bash
-docker run -it -u ubuntu wiseupdata/python:3.10-ubuntu-23.04 bash
+docker run -it wiseupdata/python:3.10
+docker run -it wiseupdata/python:3.10-ubuntu-22.04
 ```
 
 ### Info 🔎
@@ -109,7 +111,8 @@ docker run -it -u ubuntu wiseupdata/python:3.10-ubuntu-23.04 bash
 - Python 3.9
 - Ubuntu 23.04 Luna - Official
 - User`ubuntu` with sudo, no password
-- Made with A.I. contribution 🤖 
+- Made with A.I. contribution 🤖
+- New cleaned empty python independent of the system python  
 - [Dockerfile](https://github.com/wiseupdata/python/blob/main/versions/3.9/Dockerfile)
 
   > This setup it's the same for the tags: 3.9 and 3.9-ubuntu-23.04
@@ -144,11 +147,11 @@ click here!▶️
 - Build the image
 
 ```shell
-docker build -t python ./versions/3.11
+docker build -t python ./versions/3.11 --no-cache
 ```
 - Test the image
 ```shell
-docker run -it --rm python bash
+docker run -it --rm python
 ```
 
 - Log in to your account 🤜

@@ -1,9 +1,8 @@
 #########################################################
 # Oficial Python Image based in Ubuntu
 #########################################################
-# Ubuntu 23.04
-FROM ubuntu:lunar 
-
+# Ubuntu Ubuntu 22.04.2 LTS end of life April 2032
+FROM ubuntu:jammy
 LABEL maintainer="silvio liborio"
 
 ENV DEBIAN_FRONTEND noninteractive
@@ -16,13 +15,16 @@ ENV LC_ALL en_US.UTF-8
 ENV LC_CTYPE en_US.UTF-8
 ENV LC_MESSAGES en_US.UTF-8
 
+ENV PYTHON_VERSION=3.10.11
+
 # Update package list
-RUN apt update && apt upgrade -y
+RUN apt-get update && apt-get upgrade -y
+
 
 ##############################################################################
 # Install dependencies 
 ##############################################################################
-RUN apt install -y \
+RUN apt-get install -y \
     apt-transport-https  \
     build-essential  \
     ca-certificates  \
@@ -60,7 +62,10 @@ RUN apt install -y \
     zip \
     zlib1g-dev \
     sudo \
-    software-properties-common
+    software-properties-common \
+    jq \
+    iputils-ping \
+    locales
 
 # Clean up unnecessary files and directories
 RUN rm -rf /tmp/* && \
@@ -68,22 +73,37 @@ RUN rm -rf /tmp/* && \
     apt clean && \
     rm -rf /var/lib/apt/lists/*
 
+
 ##############################################################################
 # Preparer the user
 ##############################################################################
-RUN usermod -aG sudo ubuntu
+RUN adduser ubuntu --disabled-password && usermod -aG sudo ubuntu
 RUN echo "ubuntu ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/ubuntu
 
+
 ##############################################################################
-# Install Python 3.10
+# Install a clean and exlusive Python 3.10
 ##############################################################################
-RUN wget https://www.python.org/ftp/python/3.10.11/Python-3.10.11.tgz && \
-    tar -xf Python-3.10.11.tgz && \
-    cd Python-3.10.11 && \
+RUN cd /opt && \ 
+    wget https://www.python.org/ftp/python/$PYTHON_VERSION/Python-$PYTHON_VERSION.tgz && \
+    tar -xf Python-$PYTHON_VERSION.tgz && \
+    mv Python-$PYTHON_VERSION python && \
+    rm Python-$PYTHON_VERSION.tgz && \
+    cd python && \
     ./configure --enable-optimizations && \
     make -j$(nproc) && \
-    sudo make altinstall
+    make altinstall
+
 RUN ln -s /usr/local/bin/python3.10 /usr/local/bin/python && \
     ln -s /usr/local/bin/pip3.10 /usr/local/bin/pip
 
-RUN pip install --upgrade pip
+RUN pip install --upgrade pip && \
+    pip install yq
+
+##############################################################################
+# Final steps
+##############################################################################
+WORKDIR /home/ubuntu
+USER ubuntu
+
+CMD ["bash"]
