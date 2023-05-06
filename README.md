@@ -89,6 +89,7 @@ docker run -it -u ubuntu wiseupdata/python:3.11-ubuntu-23.04 bash
 - [Dockerfile](https://github.com/wiseupdata/python/blob/main/versions/3.10/Dockerfile)
 
   > This setup it's the same for the tags: 3.10 and 3.10-ubuntu-22.04
+  > System libraries described at [Dockerfile](https://github.com/wiseupdata/python/blob/main/versions/3.10/Dockerfile)
 
 <br>
 
